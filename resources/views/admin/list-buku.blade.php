@@ -15,9 +15,8 @@
                 <th scope="col">No</th>
                 <th scope="col">Kode Buku</th>
                 <th scope="col">Judul</th>
-                <th scope="col">Sinopsis</th>
                 <th scope="col">Penulis</th>
-                <th scope="col">Gambar</th>
+                <th scope="col">Kode Rak</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -28,19 +27,18 @@
                 <td>{{ $i++ }}</td>
                 <td>{{ $b->kode_buku}}</td>    
                 <td>{{ $b->judul}}</td> 
-                <td>{{ $b->sinopsis}}</td>    
                 <td>{{ $b->penulis}}</td>    
+                <td>{{ $b->rak_buku->kode_rak}}</td>    
                 <td>
-                    <img src="/images/{{ $b->foto }}" alt="{{ $b->judul }}" width="100px" height="100px">
-                </td>    
-                <td>
-                    <a class="btn btn-primary mr-2" href="/admin/edit-buku/{{ $b->id }}">Edit</a>
+                    <a class="btn btn-primary mr-2" href="/admin/edit-buku/{{ $b->id }}">Lihat</a>
                 </td>  
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+
+{{-- MODAL TAMBAH BUKU --}}
 <div class="modal fade" id="tambahdatawali" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -62,7 +60,7 @@
                         <select id="status" class="form-control" name="kode_rak" required>
                             <option value="" selected>Pilih Nama Rak</option>
                             @foreach ($rak_buku as $rak)
-                                <option value="{{ $rak->kode_rak }}"> {{ $rak->nama_rak }}</option>
+                                <option value="{{ $rak->id }}"> {{ $rak->nama_rak }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -94,7 +92,7 @@
                             <option value="Dipinjam">Dipinjam</option>
                         </select>
                     </div>
-                    <button type="submit" style="float: right;" class="btn btn-primary" onclick="">Kirim</button>
+                    <button type="submit" style="float: right;" class="btn btn-primary">Kirim</button>
                 </form>
             </div>
         </div>

@@ -17,7 +17,7 @@
 
         <!-- Card Body -->
         <div class="">
-            <form action="{{ route('admin.edit-buku', $data->id) }}" method="POST">
+            <form action="{{ route('admin.edit-buku', $data->id) }}" method="POST"  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
@@ -27,9 +27,9 @@
                 <div class="form-group">
                     <label for="status" class="col-form-label">Nama Rak Buku:</label>
                     <select id="status" class="form-control" name="kode_rak">
-                        <option {{ $data->kode_rak == "" ? 'selected' : '' }} value="">Pilih Nama Rak</option>
+                        <option {{ $data->rak_buku->kode_rak == "" ? 'selected' : '' }} value="">Pilih Nama Rak</option>
                         @foreach ($rak_buku as $rak)
-                            <option {{ $data->kode_rak == $rak->kode_rak ? 'selected' : '' }} value="{{ $rak->kode_rak }}"> {{ $rak->nama_rak }}</option>
+                            <option {{ $data->rak_buku->kode_rak == $rak->kode_rak ? 'selected' : '' }} value="{{ $rak->id }}"> {{ $rak->nama_rak }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -51,8 +51,8 @@
                 </div>
                 <div class="form-group">
                     <label for="foto" class="col-form-label">Foto:</label>
-                    <img src="/images/{{ $data->foto }}" alt="{{ $data->judul }}" width="100px" height="100px">
-                    <input type="file" class="form-control" id="foto" name="foto">
+                    <img class="d-block" src="{{ env('APP_URL') . ':8000/storage/' . $data->foto }}" alt="{{ $data->judul }}" width="100px" height="100px">
+                    <input type="file" class="form-control" id="foto-baru" name="foto-baru">
                 </div>
                 <div class="form-group">
                     <label for="status" class="col-form-label">Status:</label>

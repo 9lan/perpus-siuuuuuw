@@ -7,6 +7,9 @@ use App\Http\Controllers\RegisterAdminController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\RakBukuController;
+use App\Http\Controllers\ListAnggotaController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +22,12 @@ use App\Http\Controllers\RakBukuController;
 |
 */
 
+// user routes
 Route::get('/', function () {
     return view('dashboard');
-})->middleware(['auth:admin', 'auth'])->name('dashboard'); 
+})->middleware(['auth:user'])->name('dashboard.user'); 
 
+// auth
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('auth.login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('auth.login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('auth.logout');
@@ -30,7 +35,21 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('auth.logout');
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest')->name('auth.register');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('auth.register');
 
+// buku routes
+Route::get('/buku', [BukuController::class, 'index'])->middleware('auth:user')->name('user.buku.index');
+Route::get('/buku/{id}', [BukuController::class, 'findById'])->middleware('auth:user')->name('user.buku.lihat');
+Route::post('/buku/{id}', [BukuController::class, 'pinjam'])->middleware('auth:user')->name('user.buku.pinjam');
+
+Route::get('/denda', [PengembalianController::class, 'index'])->middleware('auth:user')->name('user.denda.index');
+
+// admin routes
 Route::prefix('admin')->group(function () {
+    // dashboard
+    Route::get('/', function () {
+        return view('dashboard');
+    })->middleware(['auth:admin'])->name('dashboard');
+
+    // auth
     Route::get('/login', [LoginAdminController::class, 'index'])->middleware('guest')->name('admin.login');
     Route::post('/login', [LoginAdminController::class, 'authenticate'])->middleware('guest')->name('admin.login');
     Route::post('/logout', [LoginAdminController::class, 'logout'])->middleware('guest')->name('admin.logout');
@@ -52,5 +71,19 @@ Route::prefix('admin')->group(function () {
     
     Route::get('/rak-buku/{id}', [RakBukuController::class, 'findById'])->middleware('auth:admin')->name('admin.edit-rak-buku');
     Route::put('/rak-buku/{id}', [RakBukuController::class, 'update'])->middleware('auth:admin')->name('admin.edit-rak-buku');
+
+    // list anggota
+    Route::get('/anggota', [ListAnggotaController::class, 'index'])->middleware('auth:admin')->name('admin.anggota');
+    Route::post('/anggota', [ListAnggotaController::class, 'verify'])->middleware('auth:admin')->name('admin.anggota');
+
+    // list peminjaman
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->middleware('auth:admin')->name('admin.peminjaman');
+    Route::post('/peminjaman', [PeminjamanController::class, 'verify'])->middleware('auth:admin')->name('admin.peminjaman');
+
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'findById'])->middleware('auth:admin')->name('admin.peminjaman.view');
+    Route::post('/peminjaman/{id}', [PeminjamanController::class, 'update'])->middleware('auth:admin')->name('admin.peminjaman.view');
+
+    Route::get('/pengembalian', [PengembalianController::class, 'index'])->middleware('auth:admin')->name('admin.pengembalian');
+    Route::post('/pengembalian', [PengembalianController::class, 'verify'])->middleware('auth:admin')->name('admin.pengembalian');
 
 });

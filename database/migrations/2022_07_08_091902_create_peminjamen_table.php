@@ -16,11 +16,11 @@ class CreatePeminjamenTable extends Migration
         Schema::create('peminjamen', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_pinjam');
-            $table->date('tanggal_kembali');
-            $table->integer('id_petugas');
-            $table->integer('id_anggota');
-            $table->string('kode_buku', 20);
-            $table->enum('status', ['dipinjam', 'kembali']);
+            $table->date('tanggal_kembali')->nullable();
+            $table->integer('admin_id')->nullable();
+            $table->integer('user_id');
+            $table->integer('buku_id');
+            $table->enum('status', ['dipinjam', 'booking', 'tersedia'])->default('tersedia');
             $table->timestamps();
         });
     }

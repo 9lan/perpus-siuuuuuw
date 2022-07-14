@@ -19,10 +19,10 @@ class CreatePengembaliansTable extends Migration
             $table->date('jatuh_tempo');
             $table->integer('jumlah_hari')->default(0);
             $table->integer('total_denda')->default(0);
-            $table->string('kode_buku', 20);
+            $table->integer('buku_id');
             $table->enum('status', ['Tepat Waktu', 'Denda', 'Terbayar']);
-            $table->integer('id_petugas');
-            $table->integer('id_anggota');
+            $table->integer('admin_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

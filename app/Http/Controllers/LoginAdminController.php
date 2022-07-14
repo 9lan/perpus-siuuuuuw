@@ -14,7 +14,7 @@ class LoginAdminController extends Controller
         $credentials = request(['email', 'password']);
         if (auth()->guard('admin')->attempt($credentials)) {
             request()->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/admin');
         }
         return back()->with(['login_error' => 'Email or password is incorrect.']);
     }

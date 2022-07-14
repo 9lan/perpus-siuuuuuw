@@ -15,7 +15,7 @@
     <hr class="sidebar-divider my-0">
     
     <li class=" nav-item">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/admin">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -35,19 +35,60 @@
             <i class="fas fa-fw fa-user"></i>
             <span>Buku</span></a>
     </li>
-    @endauth
-
 
     <hr class="sidebar-divider my-0">
     
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.peminjaman') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Peminjaman</span></a>
+    </li>
+
+    <hr class="sidebar-divider my-0">
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.pengembalian') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Pengembalian</span></a>
+    </li>
+
+    <hr class="sidebar-divider my-0">
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.anggota') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Anggota</span></a>
+    </li>
+    @endauth
+
     @auth('user')
+    <hr class="sidebar-divider my-0">
+
     <li class="nav-item">
         <a class="nav-link" href="/">
             <i class="fas fa-fw fa-home"></i>
-            <span>Kelas</span></a>
+            <span>Dashboard</span></a>
     </li>
+    
+    
+        @if(auth()->user()->is_verified == 1)
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('user.buku.index') }}">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Buku</span></a>
+            </li>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('user.denda.index')}}">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Denda</span></a>
+            </li>
+        @endif
     @endauth
-    <hr class="sidebar-divider my-0">
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none ">
