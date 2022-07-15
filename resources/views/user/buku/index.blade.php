@@ -10,6 +10,13 @@
 </div>
 @endif
 
+@if (auth()->user()->is_verified == 0)
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    Akun anda belum diverifikasi. Silahkan hubungi Admin untuk dapat mengakses fitur-fitur lain.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
 <div class="row">
     @foreach ($buku as $b)
         <div class="col-lg-3 col-md-6 mb-4">

@@ -10,6 +10,7 @@ use App\Http\Controllers\RakBukuController;
 use App\Http\Controllers\ListAnggotaController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,14 +41,13 @@ Route::get('/buku', [BukuController::class, 'index'])->middleware('auth:user')->
 Route::get('/buku/{id}', [BukuController::class, 'findById'])->middleware('auth:user')->name('user.buku.lihat');
 Route::post('/buku/{id}', [BukuController::class, 'pinjam'])->middleware('auth:user')->name('user.buku.pinjam');
 
+Route::get('/peminjaman', [PeminjamanController::class, 'index'])->middleware('auth:user')->name('user.peminjaman.index');
 Route::get('/denda', [PengembalianController::class, 'index'])->middleware('auth:user')->name('user.denda.index');
 
 // admin routes
 Route::prefix('admin')->group(function () {
     // dashboard
-    Route::get('/', function () {
-        return view('dashboard');
-    })->middleware(['auth:admin'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->middleware(['auth:admin'])->name('dashboard');
 
     // auth
     Route::get('/login', [LoginAdminController::class, 'index'])->middleware('guest')->name('admin.login');
@@ -75,6 +75,10 @@ Route::prefix('admin')->group(function () {
     // list anggota
     Route::get('/anggota', [ListAnggotaController::class, 'index'])->middleware('auth:admin')->name('admin.anggota');
     Route::post('/anggota', [ListAnggotaController::class, 'verify'])->middleware('auth:admin')->name('admin.anggota');
+
+    Route::get('/anggota/{id}', [ListAnggotaController::class, 'findById'])->middleware('auth:admin')->name('admin.anggota.view');
+    Route::put('/anggota/{id}', [ListAnggotaController::class, 'update'])->middleware('auth:admin')->name('admin.anggota.view');
+    Route::delete('/anggota/{id}', [ListAnggotaController::class, 'delete'])->middleware('auth:admin')->name('admin.anggota.view');
 
     // list peminjaman
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])->middleware('auth:admin')->name('admin.peminjaman');

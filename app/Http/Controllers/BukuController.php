@@ -62,7 +62,6 @@ class BukuController extends Controller
     public function update(Request $request, $id)
     {
         $data = Buku::findOrFail($id);
-        $photo_path = public_path('images/' . $data->foto);
 
         if ($request->hasFile('foto-baru')) {
             Storage::delete($data->foto);
@@ -89,7 +88,7 @@ class BukuController extends Controller
         $data = Buku::findOrFail($id);
 
         if ($data->foto) {
-            unlink(public_path('images').$data->foto);
+            Storage::delete($data->foto);
         }
 
         $data->delete();
@@ -108,8 +107,9 @@ class BukuController extends Controller
         $pinjam->tanggal_pinjam = date('Y-m-d');
         $pinjam->status = $request->status;
         
+        $data->total_terpinjam = $data->total_terpinjam + 1;
         $data->status = $request->status;
-
+        
         $pinjam->save();
         $data->save();
 

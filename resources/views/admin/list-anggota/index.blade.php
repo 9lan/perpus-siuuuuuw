@@ -26,7 +26,7 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->is_verified == 1 ? 'Aktif' : 'Non Aktif' }}</td>
                 <td>
-                    <a class="btn btn-primary mr-2" href="/admin/anggota/{{ $user->id }}">Edit</a>
+                    <a class="btn btn-primary mr-2" href="{{ route('admin.anggota.view', $user->id) }}">Lihat</a>
                 </td>  
             </tr>
             @endforeach

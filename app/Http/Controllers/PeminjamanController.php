@@ -19,6 +19,11 @@ class PeminjamanController extends Controller
         $peminjaman = Peminjaman::where('status', '!=', 'tersedia')->get();
         $booking = Peminjaman::where('status', 'booking')->get();
 
+        if (auth()->user()->is_verified == 1) {
+            $peminjaman = Peminjaman::where('user_id', '=', auth()->user()->id)->get();
+            return view('user.peminjaman.index', compact('buku', 'anggota', 'petugas', 'peminjaman', 'booking'));
+        }
+
         return view('admin.peminjaman.index', compact('buku', 'anggota', 'petugas', 'peminjaman', 'booking'));
     }
 

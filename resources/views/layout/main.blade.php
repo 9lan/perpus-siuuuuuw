@@ -122,5 +122,6 @@
     <script>
         $('.toast').toast('show');
     </script>
+    @yield('script')
 </body>
 </html>

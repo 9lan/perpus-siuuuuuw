@@ -23,6 +23,7 @@ class CreateBukusTable extends Migration
             $table->text('foto')->nullable();
             $table->enum('status', ['tersedia', 'booking', 'dipinjam'])->default('tersedia')->nullable();
             $table->integer('denda')->default(0)->nullable();
+            $table->integer('total_terpinjam')->default(0)->nullable();
             $table->timestamps();
         });
     }

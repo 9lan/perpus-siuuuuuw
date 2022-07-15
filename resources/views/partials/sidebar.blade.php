@@ -63,21 +63,34 @@
 
     @auth('user')
     <hr class="sidebar-divider my-0">
+    
+    @if(auth()->user()->foto)
+        <li class="nav-item px-3 d-none d-md-block">
+            <img src="{{ env('APP_URL') . ':8000/storage/' . auth()->user()->foto }}" class="img-thumbnail profile rounded-circle" alt="{{ 'Foto ' . auth()->user()->name }}">
+            <p class="text-center text-white mt-2">{{auth()->user()->name}}</p>
+        </li>
+    @else
+        <li class="nav-item px-3 d-none d-md-block">
+            <img src="https://cdn0-production-images-kly.akamaized.net/10pYJTQfy8oxHSgSGmvpgDCAGic=/1200x1200/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/2832638/original/037807400_1560947825-20190619-Anya-Geraldine-1.jpg" class="img-thumbnail profile rounded-circle" alt="">
+        </li>
+    @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="/">
-            <i class="fas fa-fw fa-home"></i>
-            <span>Dashboard</span></a>
-    </li>
-    
-    
         @if(auth()->user()->is_verified == 1)
+
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('user.buku.index') }}">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Buku</span></a>
+            </li>
+
+            <hr class="sidebar-divider my-0">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('user.peminjaman.index') }}">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Peminjaman</span></a>
             </li>
 
             <hr class="sidebar-divider my-0">
